@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="FootballScoresUI.CreateTeam"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FootballScoresUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="SlateGray">
+
+    <Frame x:Name="ContentFrame" Margin="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="CreateTeamTitle" Grid.Row="0" Text="Create Team" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+
+            <ComboBox x:Name="CreateTeamLeagueDropdown" Grid.Row="1" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
+                      ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="CreateTeamLeagueDropdown_SelectionChanged"/>
+
+            <TextBox x:Name="CreateTeamInput" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter team name..." FontSize="35" Margin="10"/>
+
+            <Button x:Name="CreateTeamButton" Grid.Row="4" Content="Add Team" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Background="Green" Padding="25, 15" Click="CreateTeamButton_Click"/>
+
+            <TextBlock x:Name="CreateTeamSubmitMessage" Text="Test" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" FontSize="35" Foreground="White"/>
+
+        </Grid>
+    </Frame>
+</Page>

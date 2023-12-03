@@ -1,0 +1,172 @@
+﻿<Page
+    x:Class="FootballScoresUI.ViewLeague"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FootballScoresUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="SlateGray">
+
+    <Frame x:Name="ContentFrame" Margin="20">
+        <ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="ViewLeagueTitle" Grid.Row="0" Text="View League" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                <ComboBox x:Name="ViewLeagueDropdown" Grid.Row="1" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" Margin="10" HorizontalAlignment="Stretch" 
+                          ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="ViewLeagueDropdown_SelectionChanged">
+                    <x:String>{}</x:String>
+                    <x:String>League 2</x:String>
+                    <x:String>League 3</x:String>
+                    <x:String>League 4</x:String>
+                </ComboBox>
+
+                <Grid x:Name="ViewLeagueData" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!--Header-->
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="0">
+                        <TextBlock Text="Team" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="1">
+                        <TextBlock Text="GP" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="2">
+                        <TextBlock Text="W" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="3">
+                        <TextBlock Text="D" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="4">
+                        <TextBlock Text="L" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="5">
+                        <TextBlock Text="GF" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="6">
+                        <TextBlock Text="GA" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="7">
+                        <TextBlock Text="GD" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="8">
+                        <TextBlock Text="Points" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+
+                    <ItemsControl x:Name="ViewLeagueTeamItemsControl" Grid.Row="1" Grid.ColumnSpan="9">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="0">
+                                        <TextBlock x:Name="ViewLeagueTeam1" Text="{Binding Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Column="1">
+                                        <TextBlock Text="{Binding GamesPlayed}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="2">
+                                        <TextBlock Text="{Binding GamesWon}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="3">
+                                        <TextBlock Text="{Binding GamesDrawn}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="4">
+                                        <TextBlock Text="{Binding GamesLost}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="5">
+                                        <TextBlock Text="{Binding GoalsFor}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="6">
+                                        <TextBlock Text="{Binding GoalsAgainst}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="7">
+                                        <TextBlock Text="{Binding GoalDifference}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="8">
+                                        <TextBlock Text="{Binding Points}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+                    <!--Team1-->
+                    <!--
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="0">
+                        <TextBlock x:Name="ViewLeagueTeam1" Text="" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="1">
+                        <TextBlock Text="4" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="2">
+                        <TextBlock Text="3" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="3">
+                        <TextBlock Text="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="4">
+                        <TextBlock Text="0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="5">
+                        <TextBlock Text="10" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="6">
+                        <TextBlock Text="2" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="7">
+                        <TextBlock Text="8" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="8">
+                        <TextBlock Text="10" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+
+                    -->
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Frame>
+</Page>

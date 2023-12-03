@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="FootballScoresUI.CreateLeague"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FootballScoresUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="SlateGray">
+
+    <Frame x:Name="ContentFrame" Margin="20">
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="CreateLeagueTitle" Grid.Row="0" Text="Create League" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+
+                <TextBox x:Name="CreateLeagueInput" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter league name..." FontSize="35" Margin="0,0,10,0"/>
+                <Button x:Name="CreateLeagueButton" Grid.Column="1" Grid.Row="1" Content="Create League" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Green" FontSize="25" Click="CreateLeagueButton_Click"/>
+
+                <TextBlock x:Name="AddTeamTitle" Grid.Row="3" Text="Add Team" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+
+                <TextBox x:Name="AddTeamInput" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter team name..." FontSize="35" Margin="0,0,10,0"/>
+                <Button x:Name="AddTeamButton" Grid.Column="1" Grid.Row="4" Content="Add Team" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Green" FontSize="25" Click="AddTeamButton_Click"/>
+
+                <TextBlock x:Name="CreateLeagueSubmitMessage" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Test" FontSize="35" Foreground="White"/>
+            </Grid>
+        </ScrollViewer>
+    </Frame>
+</Page>
