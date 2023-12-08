@@ -8,14 +8,41 @@
     mc:Ignorable="d"
     Background="SlateGray">
 
-    <Grid>
-        <Frame>
-            <TextBlock
-                Text="Hello World!"
-                FontSize="50"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Foreground="White" />
-        </Frame>
-    </Grid>
+    <Frame>
+        <ScrollViewer>
+            <StackPanel>
+                <!--Intro-->
+                <TextBlock Text="Football Scores" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+
+                <TextBlock x:Name="HomeText" FontSize="28" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White" Margin="5">
+                    <Run Text="&#x2022; Create Your League: " FontWeight="Bold"/>
+                    <Run Text="Use the 'Create League' button to establish your own league."/>
+                </TextBlock>
+                <TextBlock FontSize="28" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White" Margin="5">
+                    <Run Text="&#x2022; Add Teams and Players: " FontWeight="Bold"/>
+                    <Run Text="Easily add teams and players to your league using the 'Add Team' and 'Add Player' buttons."/>
+                </TextBlock>
+                <TextBlock FontSize="28" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White" Margin="5">
+                    <Run Text="&#x2022; Add Match Results: " FontWeight="Bold"/>
+                    <Run Text="Input scores and player stats with the 'Add Match' button post-game to keep records current."/>
+                </TextBlock>
+                <TextBlock FontSize="28" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White" Margin="5">
+                    <Run Text="&#x2022; Keep Updated: " FontWeight="Bold"/>
+                    <Run Text="View leagues, teams, players, and matches for the latest scores and stats."/>
+                </TextBlock>
+
+                <!--Tutorial-->
+                <ComboBox x:Name="HomeDropdown" VerticalAlignment="Stretch" PlaceholderText="Dropdowns are used to select options..." FontSize="35" Margin="10" 
+                          HorizontalAlignment="Stretch" SelectionChanged="HomeDropdown_SelectionChanged">
+                    <ComboBoxItem Content="There will be options in these boxes..."/>
+                    <ComboBoxItem Content="This will select a league, team, player, or match..."/>
+                    <ComboBoxItem Content="Sometimes options won't appear unless -"/>
+                    <ComboBoxItem Content="the previous dropdown has been completed..."/>
+                </ComboBox>
+                <TextBox x:Name="HomeInput" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" PlaceholderText="Text boxes are used for user input..." FontSize="35" Margin="10"/>
+                <Button x:Name="HomeButton" Content="Buttons are used to submit..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Background="Green" Padding="25, 15" Click="HomeButton_Click"/>
+                <TextBlock x:Name="HomeSubmitMessage" Text="Submit or error messages will show here..." HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Row="5" FontSize="35" Foreground="White"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Frame>
 </Page>

@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FootballScoresUI
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// View model for the Home page.
     /// </summary>
     public sealed partial class Home : Page
     {
         public Home()
         {
             this.InitializeComponent();
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            HomeSubmitMessage.Text = "This will either be a succes or error message and the options will be cleared...";
+            HomeDropdown.PlaceholderText = "Dropdowns are used to select options...";
+            HomeInput.Text = "";
+        }
+
+        private void HomeDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            HomeDropdown.SelectedItem = null;
+            HomeDropdown.PlaceholderText = "The selected item will be displayed here...";
         }
     }
 }

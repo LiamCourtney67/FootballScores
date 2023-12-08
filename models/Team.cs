@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace FootballScoresUI.models
 {
@@ -25,7 +26,7 @@ namespace FootballScoresUI.models
         private int _goalDifference;
         private int _points;
 
-        private TeamService _teamService = new TeamService();   // This is used to pull players and matches from the database and push new stats.
+        private TeamService _teamService = new TeamService();
 
         public int TeamID { get => _teamID; set => _teamID = value; }
         public string Name
@@ -33,24 +34,25 @@ namespace FootballScoresUI.models
             get => _name;
             private set
             {
-                if (value.Length >= 3 || value.Length <= 35)
+                value = Regex.Replace(value, @"\s+", " "); // Replaces multiple spaces with a single space
+
+                if (value.Length >= 3 && value.Length <= 35)
                 {
-                    if (!value.Any(c => (char.IsPunctuation(c) || char.IsSymbol(c)) && c != '-' && c != '\''))
-                    {
-                        _name = value.Trim();
-                    }
-                    else
-                    {
-                        throw new Exception("Name is not valid: cannot contain punctuation except - or '");
-                    }
+                    if (value.All(c => char.IsLetterOrDigit(c) || c == '-' || c == '\'' || char.IsWhiteSpace(c))) { _name = value.Trim(); }
+                    else { throw new Exception("Name is not valid: can only contain letters, digits, - or '"); }
                 }
-                else
-                {
-                    throw new Exception("Name is not valid: must be between 3 and 35 characters long.");
-                }
+                else { throw new Exception("Name is not valid: must be between 3 and 35 characters long."); }
             }
         }
-        public League League { get => _league; private set => _league = value; }
+        public League League
+        {
+            get => _league;
+            private set
+            {
+                if (value != null) { _league = value; }
+                else { throw new Exception("League is not valid: cannot be empty."); }
+            }
+        }
         public ObservableCollection<Player> Players { get => _players; set => _players = value; }
         public ObservableCollection<Match> Matches { get => matches; set => matches = value; }
 
@@ -66,6 +68,11 @@ namespace FootballScoresUI.models
 
         public TeamService TeamService { get => _teamService; }
 
+        /// <summary>
+        /// Creating an instance of the <see cref="Team"/> class.
+        /// </summary>
+        /// <param name="name">The name of the team to be added.</param>
+        /// <param name="league">The league object for the team.</param>
         public Team(string name, League league)
         {
             this.Name = name;
@@ -73,6 +80,20 @@ namespace FootballScoresUI.models
             league.AddTeam(this);
         }
 
+        /// <summary>
+        /// Creating an instance of the <see cref="Team"/> class with an existing team from the database.
+        /// </summary>
+        /// <param name="teamID">Team ID from the database.</param>
+        /// <param name="name">Team name from the database.</param>
+        /// <param name="league">League object of the team from the database.</param>
+        /// <param name="gamesPlayed">Amount of games played from the database.</param>
+        /// <param name="gamesWon">Amount of games won from the database.</param>
+        /// <param name="gamesDrawn">Amount of games drawn from the database.</param>
+        /// <param name="gamesLost">Amount of games lost from the database.</param>
+        /// <param name="goalsFor">Amount of goals scored from the database.</param>
+        /// <param name="goalsAgainst">Amount of goals conceded from the database.</param>
+        /// <param name="goalDifference">Amount of goals scored minus goals against from the database.</param>
+        /// <param name="points">Amount of points from the database.</param>
         public Team(int teamID, string name, League league, int gamesPlayed, int gamesWon, int gamesDrawn, int gamesLost, int goalsFor, int goalsAgainst, int goalDifference, int points)
         {
             this.TeamID = teamID;
@@ -90,6 +111,11 @@ namespace FootballScoresUI.models
             this.Points = points;
         }
 
+        /// <summary>
+        /// Assign team statistics based on the goals scored and conceded.
+        /// </summary>
+        /// <param name="goalsFor">Amount of goals scored in a match.</param>
+        /// <param name="goalsAgainst">Amount of goals conceded in a match.</param>
         public void AssignTeamStats(int goalsFor, int goalsAgainst)
         {
             GamesPlayed++;
@@ -116,16 +142,38 @@ namespace FootballScoresUI.models
             GoalDifference = GoalsFor - GoalsAgainst;
         }
 
+        /// <summary>
+        /// Adds a player to the ObservableCollection of players and sorts the players.
+        /// </summary>
+        /// <param name="player">Player object to be added.</param>
         public void AddPlayer(Player player) { Players.Add(player); SortPlayers(); }
 
+        /// <summary>
+        /// Removes a player from the ObservableCollection of players and sorts the players.
+        /// </summary>
+        /// <param name="player">Player object to be removed.</param>
         public void RemovePlayer(Player player) { Players.Remove(player); SortPlayers(); }
 
+        /// <summary>
+        /// Sorts the ObservableCollection of players in the team by kit number.
+        /// </summary>
         private void SortPlayers() { Players = new ObservableCollection<Player>(Players.OrderBy(player => player.KitNumber)); }
 
+        /// <summary>
+        /// Adds a match to the ObservableCollection of matches and sorts the matches.
+        /// </summary>
+        /// <param name="match">Match object to be added.</param>
         public void AddMatch(Match match) { Matches.Add(match); SortMatches(); }
 
+        /// <summary>
+        /// Removes a match from the ObservableCollection of matches and sorts the matches.
+        /// </summary>
+        /// <param name="match">Match object to be removed.</param>
         public void RemoveMatch(Match match) { Matches.Remove(match); SortMatches(); }
 
+        /// <summary>
+        /// Sorts the ObservableCollection of matches in the team by date played.
+        /// </summary>
         public void SortMatches() { Matches = new ObservableCollection<Match>(Matches.OrderBy(match => match.DatePlayed)); }
 
     }

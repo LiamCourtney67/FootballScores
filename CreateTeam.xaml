@@ -20,17 +20,18 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="CreateTeamTitle" Grid.Row="0" Text="Create Team" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <!--Selecting a league-->
+            <TextBlock x:Name="CreateTeamTitle" Grid.Row="0" Text="Create Team" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White"/>
 
             <ComboBox x:Name="CreateTeamLeagueDropdown" Grid.Row="1" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
                       ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="CreateTeamLeagueDropdown_SelectionChanged"/>
 
-            <TextBox x:Name="CreateTeamInput" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter team name..." FontSize="35" Margin="10"/>
-
+            <!--Creating a team-->
+            <TextBox x:Name="CreateTeamInput" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" PlaceholderText="Enter team name..." FontSize="35" Margin="10"/>
             <Button x:Name="CreateTeamButton" Grid.Row="4" Content="Add Team" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Background="Green" Padding="25, 15" Click="CreateTeamButton_Click"/>
 
-            <TextBlock x:Name="CreateTeamSubmitMessage" Text="Test" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" FontSize="35" Foreground="White"/>
-
+            <!--Submit/error message-->
+            <TextBlock x:Name="CreateTeamSubmitMessage" Text="Test" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Row="5" FontSize="35" Foreground="White"/>
         </Grid>
     </Frame>
 </Page>

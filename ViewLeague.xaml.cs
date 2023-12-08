@@ -1,23 +1,36 @@
 ﻿using FootballScoresUI.models;
+using System;
 using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FootballScoresUI
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// View model for the ViewLeague page.
     /// </summary>
     public sealed partial class ViewLeague : Page
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewLeague"/> class.
+        /// </summary>
         public ViewLeague()
         {
             this.InitializeComponent();
-            ViewLeagueDropdown.ItemsSource = DataStorage.Leagues;
             ViewLeagueData.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            ViewLeagueErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+
+            try { ViewLeagueDropdown.ItemsSource = DataStorage.Leagues; }
+            catch (Exception)
+            {
+                ViewLeagueErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                ViewLeagueErrorMessage.Text = "Failed to get the data from the database.";
+            }
         }
 
+        /// <summary>
+        /// Event handler for the ViewLeagueDropdown_SelectionChanged event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewLeagueDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;

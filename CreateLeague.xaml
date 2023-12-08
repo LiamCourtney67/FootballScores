@@ -24,17 +24,26 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="CreateLeagueTitle" Grid.Row="0" Text="Create League" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+                <!--Creating a league-->
+                <TextBlock x:Name="CreateLeagueTitle" Grid.Row="0" Text="Create League" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White"/>
 
-                <TextBox x:Name="CreateLeagueInput" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter league name..." FontSize="35" Margin="0,0,10,0"/>
-                <Button x:Name="CreateLeagueButton" Grid.Column="1" Grid.Row="1" Content="Create League" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Green" FontSize="25" Click="CreateLeagueButton_Click"/>
+                <TextBox x:Name="CreateLeagueInput" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap"
+                         PlaceholderText="Enter league name..." FontSize="35" Margin="0,0,10,0"/>
+                
+                <Button x:Name="CreateLeagueButton" Grid.Column="1" Grid.Row="1" Content="Create League" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                        Background="Green" FontSize="25" Click="CreateLeagueButton_Click"/>
 
-                <TextBlock x:Name="AddTeamTitle" Grid.Row="3" Text="Add Team" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+                <!--Adding a team-->
+                <TextBlock x:Name="AddTeamTitle" Grid.Row="3" Text="Add Team" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White"/>
 
-                <TextBox x:Name="AddTeamInput" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter team name..." FontSize="35" Margin="0,0,10,0"/>
-                <Button x:Name="AddTeamButton" Grid.Column="1" Grid.Row="4" Content="Add Team" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Green" FontSize="25" Click="AddTeamButton_Click"/>
+                <TextBox x:Name="CreateLeagueAddTeamInput" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap"
+                         PlaceholderText="Enter team name..." FontSize="35" Margin="0,0,10,0"/>
+                
+                <Button x:Name="CreateLeagueAddTeamButton" Grid.Column="1" Grid.Row="4" Content="Add Team" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        Background="Green" FontSize="25" Click="CreateLeagueAddTeamButton_Click"/>
 
-                <TextBlock x:Name="CreateLeagueSubmitMessage" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Test" FontSize="35" Foreground="White"/>
+                <!--Submit/error message-->
+                <TextBlock x:Name="CreateLeagueSubmitMessage" Grid.Row="5" Grid.ColumnSpan="2" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White"/>
             </Grid>
         </ScrollViewer>
     </Frame>
