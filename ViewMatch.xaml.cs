@@ -1,14 +1,13 @@
 ﻿using FootballScoresUI.models;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace FootballScoresUI
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// View model for the ViewMatch page.
     /// </summary>
     public sealed partial class ViewMatch : Page
     {
@@ -16,13 +15,27 @@ namespace FootballScoresUI
         private Team _selectedSecondTeam;
         private Match _selectedMatch;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewMatch"/> class.
+        /// </summary>
         public ViewMatch()
         {
             this.InitializeComponent();
             ViewMatchData.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            ViewMatchLeagueDropdown.ItemsSource = DataStorage.Leagues;
+            ViewMatchErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            try { ViewMatchLeagueDropdown.ItemsSource = DataStorage.Leagues; }
+            catch (Exception)
+            {
+                ViewMatchErrorMessage.Text = "Failed to get the data from the database.";
+                ViewMatchErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
         }
 
+        /// <summary>
+        /// Event handler for the ViewMatchLeagueDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewTeamLeagueDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -39,6 +52,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the ViewMatchFirstTeamDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewMatchFirstTeamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -55,15 +73,17 @@ namespace FootballScoresUI
                             ViewMatchDateAndScoreDropdown.ItemsSource = _selectedFirstTeam.Matches;
                             ViewMatchDateAndScoreDropdown.DisplayMemberPath = "MatchData";
                         }
-                        else
-                        {
-                            comboBox.SelectedItem = null;
-                        }
+                        else { comboBox.SelectedItem = null; }
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Event handler for the ViewMatchSecondTeamDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewMatchSecondDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -82,58 +102,56 @@ namespace FootballScoresUI
                                 ViewMatchDateAndScoreDropdown.ItemsSource = FilterMatches(_selectedFirstTeam, _selectedSecondTeam);
                                 ViewMatchDateAndScoreDropdown.DisplayMemberPath = "MatchData";
                             }
-                            else
-                            {
-                                comboBox.SelectedItem = null;
-                            }
+                            else { comboBox.SelectedItem = null; }
                         }
                     }
                 }
-                else
-                {
-                    comboBox.SelectedItem = null;
-                }
+                else { comboBox.SelectedItem = null; }
             }
         }
 
+        /// <summary>
+        /// Filters the matches for only the two teams.
+        /// </summary>
+        /// <param name="firstTeam">Team object of the first team.</param>
+        /// <param name="secondTeam">Team object of the second team.</param>
+        /// <returns>An Observable Collection of filtered matches.</returns>
         private ObservableCollection<Match> FilterMatches(Team firstTeam, Team secondTeam)
         {
-            if (firstTeam == null || secondTeam == null)
-            {
-                return null;
-            }
+            if (firstTeam == null || secondTeam == null) { return null; }
 
             var filteredMatches = firstTeam.Matches.Where(m => m.HomeTeam == secondTeam || m.AwayTeam == secondTeam).ToList();
             return new ObservableCollection<Match>(filteredMatches);
         }
 
+        /// <summary>
+        /// Event handler for the ViewMatchDateDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewMatchDateDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             if (comboBox != null && comboBox.SelectedItem != null)
             {
-                var selectedMatch = comboBox.SelectedItem as Match;
-                if (selectedMatch != null)
+                _selectedMatch = comboBox.SelectedItem as Match;
+                if (_selectedMatch != null)
                 {
-                    _selectedMatch = selectedMatch;
-                    if (_selectedMatch != null)
-                    {
-                        ViewMatchData.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                        ViewMatchHomeTeamName.Text = _selectedMatch.HomeTeam.Name;
-                        ViewMatchHomeTeamGoals.Text = _selectedMatch.HomeGoals.ToString();
-                        ViewMatchHomeTeamScorersItemsControl.ItemsSource = _selectedMatch.HomeScorers;
-                        ViewMatchHomeTeamAssistsItemsControl.ItemsSource = _selectedMatch.HomeAssists;
-                        ViewMatchHomeTeamYellowCardsItemsControl.ItemsSource = _selectedMatch.HomeYellowCards;
-                        ViewMatchHomeTeamRedCardsItemsControl.ItemsSource = _selectedMatch.HomeRedCards;
+                    ViewMatchData.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    ViewMatchHomeTeamName.Text = _selectedMatch.HomeTeam.Name;
+                    ViewMatchHomeTeamGoals.Text = _selectedMatch.HomeGoals.ToString();
+                    ViewMatchHomeTeamScorersItemsControl.ItemsSource = _selectedMatch.HomeScorers;
+                    ViewMatchHomeTeamAssistsItemsControl.ItemsSource = _selectedMatch.HomeAssists;
+                    ViewMatchHomeTeamYellowCardsItemsControl.ItemsSource = _selectedMatch.HomeYellowCards;
+                    ViewMatchHomeTeamRedCardsItemsControl.ItemsSource = _selectedMatch.HomeRedCards;
 
-                        ViewMatchAwayTeamName.Text = _selectedMatch.AwayTeam.Name;
-                        ViewMatchAwayTeamGoals.Text = _selectedMatch.AwayGoals.ToString();
-                        ViewMatchAwayTeamScorersItemsControl.ItemsSource = _selectedMatch.AwayScorers;
-                        ViewMatchAwayTeamAssistsItemsControl.ItemsSource = _selectedMatch.AwayAssists;
-                        ViewMatchAwayTeamYellowCardsItemsControl.ItemsSource = _selectedMatch.AwayYellowCards;
-                        ViewMatchAwayTeamRedCardsItemsControl.ItemsSource = _selectedMatch.AwayRedCards;
+                    ViewMatchAwayTeamName.Text = _selectedMatch.AwayTeam.Name;
+                    ViewMatchAwayTeamGoals.Text = _selectedMatch.AwayGoals.ToString();
+                    ViewMatchAwayTeamScorersItemsControl.ItemsSource = _selectedMatch.AwayScorers;
+                    ViewMatchAwayTeamAssistsItemsControl.ItemsSource = _selectedMatch.AwayAssists;
+                    ViewMatchAwayTeamYellowCardsItemsControl.ItemsSource = _selectedMatch.AwayYellowCards;
+                    ViewMatchAwayTeamRedCardsItemsControl.ItemsSource = _selectedMatch.AwayRedCards;
 
-                    }
                 }
             }
         }

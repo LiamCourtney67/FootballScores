@@ -17,16 +17,17 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="ViewLeagueTitle" Grid.Row="0" Text="View League" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"></TextBlock>
-                <ComboBox x:Name="ViewLeagueDropdown" Grid.Row="1" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" Margin="10" HorizontalAlignment="Stretch" 
-                          ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="ViewLeagueDropdown_SelectionChanged">
-                    <x:String>{}</x:String>
-                    <x:String>League 2</x:String>
-                    <x:String>League 3</x:String>
-                    <x:String>League 4</x:String>
-                </ComboBox>
+                <!--Selecting a league-->
+                <TextBlock x:Name="ViewLeagueTitle" Grid.Row="0" Text="View League" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White"/>
 
-                <Grid x:Name="ViewLeagueData" Grid.Row="2">
+                <ComboBox x:Name="ViewLeagueDropdown" Grid.Row="1" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" 
+                          Margin="10" HorizontalAlignment="Stretch" ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="ViewLeagueDropdown_SelectionChanged"/>
+
+                <!--Error message only visible on errors-->
+                <TextBlock x:Name="ViewLeagueErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Row="2" FontSize="35" Foreground="White"/>
+
+                <Grid x:Name="ViewLeagueData" Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
@@ -41,23 +42,9 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <!--Header-->
+
+                    <!--Header for league table-->
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="0">
                         <TextBlock Text="Team" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
                     </Border>
@@ -86,6 +73,7 @@
                         <TextBlock Text="Points" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
                     </Border>
 
+                    <!--Team data from league-->
                     <ItemsControl x:Name="ViewLeagueTeamItemsControl" Grid.Row="1" Grid.ColumnSpan="9">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -102,7 +90,7 @@
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
                                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1" Grid.Column="0">
-                                        <TextBlock x:Name="ViewLeagueTeam1" Text="{Binding Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                        <TextBlock Text="{Binding Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
                                     </Border>
                                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Column="1">
                                         <TextBlock Text="{Binding GamesPlayed}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
@@ -132,39 +120,6 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-
-                    <!--Team1-->
-                    <!--
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="0">
-                        <TextBlock x:Name="ViewLeagueTeam1" Text="" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="1">
-                        <TextBlock Text="4" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="2">
-                        <TextBlock Text="3" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="3">
-                        <TextBlock Text="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="4">
-                        <TextBlock Text="0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="5">
-                        <TextBlock Text="10" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="6">
-                        <TextBlock Text="2" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="7">
-                        <TextBlock Text="8" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-                    <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="8">
-                        <TextBlock Text="10" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                    </Border>
-
-                    -->
                 </Grid>
             </Grid>
         </ScrollViewer>

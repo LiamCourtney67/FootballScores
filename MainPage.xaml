@@ -14,9 +14,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-        <NavigationView x:Name="NavigationView" Foreground="Aqua"  PaneDisplayMode="Top" IsSettingsVisible="False" ItemInvoked="NavigationView_ItemInvoked" Loaded="NavigationView_Loaded" 
-                        SelectionChanged="NavigationView_SelectionChanged" BackRequested="NavigationView_BackRequested" IsBackEnabled="{Binding ElementName=ContentFrame, Path=CanGoBack}" >
+        <!--Navigation-->
+        <NavigationView x:Name="NavigationView" Foreground="Aqua"  PaneDisplayMode="Top" IsSettingsVisible="False" ItemInvoked="NavigationView_ItemInvoked" Loaded="NavigationView_Loaded"  BackRequested="NavigationView_BackRequested" IsBackEnabled="{Binding ElementName=ContentFrame, Path=CanGoBack}" >
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Name="MenuHome" Content="Home" Icon="Home" Tag="Home"/>
                 <NavigationViewItem x:Name="MenuCreateLeague" Content="Create League" Icon="Add" Tag="CreateLeague"/>
@@ -30,6 +29,7 @@
             </NavigationView.MenuItems>
         </NavigationView>
         
-        <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed" Grid.Row="1"/>
+        <!--Frame for pages-->
+        <Frame x:Name="ContentFrame" Grid.Row="1"/>
     </Grid>
 </Page>
