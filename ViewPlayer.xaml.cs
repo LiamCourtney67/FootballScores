@@ -1,24 +1,38 @@
 ﻿using FootballScoresUI.models;
+using System;
 using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FootballScoresUI
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// View model for the ViewPlayer page.
     /// </summary>
     public sealed partial class ViewPlayer : Page
     {
         private Team _selectedTeam;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewPlayer"/> class.
+        /// </summary>
         public ViewPlayer()
         {
             this.InitializeComponent();
             ViewPlayerData.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            ViewPlayerLeagueDropdown.ItemsSource = DataStorage.Leagues;
+            ViewPlayerErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+
+            try { ViewPlayerLeagueDropdown.ItemsSource = DataStorage.Leagues; }
+            catch (Exception)
+            {
+                ViewPlayerErrorMessage.Text = "Failed to get the data from the database.";
+                ViewPlayerErrorMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
         }
 
+        /// <summary>
+        /// Event handler for the ViewPlayerLeagueDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewPlayerLeagueDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -33,6 +47,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the ViewPlayerTeamDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewPlayerTeamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -48,6 +67,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the ViewPlayerDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection changed event.</param>
         private void ViewPlayerDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -67,14 +91,8 @@ namespace FootballScoresUI
                     ViewPlayerYellowCards.Text = selectedPlayer.YellowCards.ToString();
                     ViewPlayerRedCards.Text = selectedPlayer.RedCards.ToString();
 
-                    if (selectedPlayer.Position == "Goalkeeper" || selectedPlayer.Position == "Defender")
-                    {
-                        ViewPlayerCleanSheets.Text = selectedPlayer.CleanSheets.ToString();
-                    }
-                    else
-                    {
-                        ViewPlayerCleanSheets.Text = "N/A";
-                    }
+                    if (selectedPlayer.Position == "Goalkeeper" || selectedPlayer.Position == "Defender") { ViewPlayerCleanSheets.Text = selectedPlayer.CleanSheets.ToString(); }
+                    else { ViewPlayerCleanSheets.Text = "N/A"; }
                 }
             }
         }

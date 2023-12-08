@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    
     mc:Ignorable="d"
     Background="SlateGray">
 
@@ -27,34 +26,45 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="CreatePlayerTitle" Grid.Row="0" Grid.ColumnSpan="2" Text="Create Player" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+                <!--Selecting a team-->
+                <TextBlock x:Name="CreatePlayerTitle" Grid.Row="0" Grid.ColumnSpan="2" Text="Create Player" FontSize="56" FontWeight="Bold" 
+                           HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="White"/>
 
-                <ComboBox x:Name="CreatePlayerLeagueDropdown" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
-                      ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="CreatePlayerLeagueDropdown_SelectionChanged"/>
+                <ComboBox x:Name="CreatePlayerLeagueDropdown" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Stretch" PlaceholderText="Select league..." 
+                          FontSize="35" Margin="10" HorizontalAlignment="Stretch" ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="CreatePlayerLeagueDropdown_SelectionChanged"/>
 
-                <ComboBox x:Name="CreatePlayerTeamDropdown" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" PlaceholderText="Select team..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
-                      ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="CreatePlayerTeamDropdown_SelectionChanged"/>
+                <ComboBox x:Name="CreatePlayerTeamDropdown" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" PlaceholderText="Select team..." 
+                          FontSize="35" Margin="10" HorizontalAlignment="Stretch" ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="CreatePlayerTeamDropdown_SelectionChanged"/>
 
-                <TextBox x:Name="CreatePlayerFirstNameInput" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter first name..." FontSize="35" Margin="10"/>
-                <TextBox x:Name="CreatePlayerLastNameInput" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Enter last name..." FontSize="35" Margin="10"/>
+                <!--Creating a player-->
+                <TextBox x:Name="CreatePlayerFirstNameInput" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap"
+                         PlaceholderText="Enter first name..." FontSize="35" Margin="10"/>
+                
+                <TextBox x:Name="CreatePlayerLastNameInput" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap"
+                         PlaceholderText="Enter last name..." FontSize="35" Margin="10"/>
+                
                 <Grid Grid.Row="4" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <muxc:NumberBox x:Name="CreatePlayerAgeInput" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            PlaceholderText="Enter age..." FontSize="35" Margin="10" SmallChange="1" SpinButtonPlacementMode="Compact" ValidationMode="InvalidInputOverwritten" Minimum="0" Maximum="99" ValueChanged="CreatePlayerNumberBoxInput_ValueChanged"/>
+                            PlaceholderText="Enter age..." FontSize="35" Margin="10" SmallChange="1" SpinButtonPlacementMode="Compact" ValidationMode="InvalidInputOverwritten" 
+                                    Minimum="0" Maximum="99" ValueChanged="CreatePlayerNumberBoxInput_ValueChanged"/>
+                    
                     <ComboBox x:Name="CreatePlayerPositionDropdown" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PlaceholderText="Select position..." FontSize="35" Margin="10"
                       ItemsSource="{Binding}"/>
+                    
                     <muxc:NumberBox x:Name="CreatePlayerKitNumberInput"  Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             PlaceholderText="Enter kit number..." FontSize="35" Margin="10" SmallChange="1" SpinButtonPlacementMode="Compact" ValidationMode="InvalidInputOverwritten" Minimum="0" Maximum="99" ValueChanged="CreatePlayerNumberBoxInput_ValueChanged"/>
                 </Grid>
 
-                <Button x:Name="CreatePlayerButton" Grid.Row="5" Content="Add Player" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Background="Green" Padding="25, 15" Click="CreatePlayerButton_Click"></Button>
+                <Button x:Name="CreatePlayerButton" Grid.Row="5" Content="Add Player" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Background="Green" Padding="25, 15" Click="CreatePlayerButton_Click"/>
 
-                <TextBlock x:Name="CreatePlayerSubmitMessage" Text="Test" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" FontSize="35" Foreground="White"></TextBlock>
-
+                <!--Submit/error message-->
+                <TextBlock x:Name="CreatePlayerSubmitMessage" Text="Test" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Row="6" Grid.ColumnSpan="2" FontSize="35" Foreground="White"/>
             </Grid>
         </ScrollViewer>
     </Frame>

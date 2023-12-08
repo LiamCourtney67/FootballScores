@@ -21,9 +21,13 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
-                <TextBlock x:Name="ViewPlayerTitle" Grid.Row="0" Grid.Column="0"  Text="View Player" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                <!--Selecting a player-->
+                <TextBlock x:Name="ViewPlayerTitle" Grid.Row="0" Grid.Column="0"  Text="View Player" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"
+                           TextWrapping="Wrap" Foreground="White"/>
+
                 <ComboBox x:Name="ViewPlayerLeagueDropdown" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
                           ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="ViewPlayerLeagueDropdown_SelectionChanged"/>
 
@@ -33,7 +37,10 @@
                 <ComboBox x:Name="ViewPlayerDropdown" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" PlaceholderText="Select player..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
                           ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="ViewPlayerDropdown_SelectionChanged"/>
 
-                <Grid x:Name="ViewPlayerData" Grid.Row="4" Grid.ColumnSpan="2">
+                <!--Error message only visible on errors-->
+                <TextBlock x:Name="ViewPlayerErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Row="4" Grid.ColumnSpan="2" FontSize="35" Foreground="White"/>
+
+                <Grid x:Name="ViewPlayerData" Grid.Row="5" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -48,66 +55,78 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
+                    <!--Headers for player data-->
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="0">
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="2">
-                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Age:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Age:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="0">
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Kit Number:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Kit Number:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="2">
-                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Position:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Position:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="2" Grid.Column="0">
-                        <TextBlock Grid.Row="3" Grid.Column="2" Text="Games Played:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="Games Played:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="2" Grid.Column="2">
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Clean Sheets:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Clean Sheets:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="3" Grid.Column="0">
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Goals:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Goals:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="3" Grid.Column="2">
-                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Assists:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Assists:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="4" Grid.Column="0">
-                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Yellow Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Yellow Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="4" Grid.Column="2">
-                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Red Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Red Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
 
+                    <!--Player data-->
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="0" Grid.Column="1">
-                        <TextBlock x:Name="ViewPlayerName" Grid.Row="0" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerName" Grid.Row="0" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="0" Grid.Column="3">
-                        <TextBlock x:Name="ViewPlayerAge" Grid.Row="0" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerAge" Grid.Row="0" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="1">
-                        <TextBlock x:Name="ViewPlayerKitNumber" Grid.Row="1" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerKitNumber" Grid.Row="1" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="3">
-                        <TextBlock x:Name="ViewPlayerPosition" Grid.Row="1" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerPosition" Grid.Row="1" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="2" Grid.Column="1">
-                        <TextBlock x:Name="ViewPlayerGamesPlayed" Grid.Row="3" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerGamesPlayed" Grid.Row="3" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="2" Grid.Column="3">
-                        <TextBlock x:Name="ViewPlayerCleanSheets" Grid.Row="3" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerCleanSheets" Grid.Row="3" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="3" Grid.Column="1">
-                        <TextBlock x:Name="ViewPlayerGoals" Grid.Row="2" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White" TextAlignment="Center"/>
+                        <TextBlock x:Name="ViewPlayerGoals" Grid.Row="2" Grid.Column="1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White" TextAlignment="Center"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="3" Grid.Column="3">
-                        <TextBlock x:Name="ViewPlayerAssists" Grid.Row="2" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerAssists" Grid.Row="2" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="4" Grid.Column="1">
-                        <TextBlock x:Name="ViewPlayerYellowCards" Grid.Row="2" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerYellowCards" Grid.Row="2" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="4" Grid.Column="3">
-                        <TextBlock x:Name="ViewPlayerRedCards" Grid.Row="2" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewPlayerRedCards" Grid.Row="2" Grid.Column="3" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                 </Grid>
             </Grid>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace FootballScoresUI.models
 {
@@ -22,21 +23,14 @@ namespace FootballScoresUI.models
             get => _name;
             private set
             {
-                if (value.Length >= 3 || value.Length <= 35)
+                value = Regex.Replace(value, @"\s+", " "); // Replaces multiple spaces with a single space
+
+                if (value.Length >= 3 && value.Length <= 35)
                 {
-                    if (!value.Any(c => (char.IsPunctuation(c) || char.IsSymbol(c)) && c != '-' && c != '\''))
-                    {
-                        _name = value.Trim();
-                    }
-                    else
-                    {
-                        throw new Exception("Name is not valid: cannot contain punctuation except - or '");
-                    }
+                    if (value.All(c => char.IsLetterOrDigit(c) || c == '-' || c == '\'' || char.IsWhiteSpace(c))) { _name = value.Trim(); }
+                    else { throw new Exception("Name is not valid: can only contain letters, digits, - or '"); }
                 }
-                else
-                {
-                    throw new Exception("Name is not valid: must be between 3 and 35 characters long.");
-                }
+                else { throw new Exception("Name is not valid: must be between 3 and 35 characters long."); }
             }
         }
         public ObservableCollection<Team> Teams { get => _teams; set => _teams = value; }
@@ -45,16 +39,13 @@ namespace FootballScoresUI.models
         public LeagueService LeagueService { get => _leagueService; }
 
         /// <summary>
-        /// Creating an instance of the League class.
+        /// Creating an instance of the <see cref="League"/> class.
         /// </summary>
         /// <param name="name">League name.</param>
-        public League(string name)
-        {
-            this.Name = name;
-        }
+        public League(string name) { this.Name = name; }
 
         /// <summary>
-        /// Creating an instance of the League class with an existing league from the database.
+        /// Creating an instance of the <see cref="League"/> class with an existing league from the database.
         /// </summary>
         /// <param name="leagueID">LeagueID from the database.</param>
         /// <param name="name">League name from the database.</param>
@@ -62,35 +53,33 @@ namespace FootballScoresUI.models
         {
             this.LeagueID = leagueID;
             this.Name = name;
-            this.Teams = LeagueService.TeamService.GetAllTeamsForLeague(this);          // Data coming from database is alreacy sorted.
-            this.Matches = LeagueService.MatchService.GetAllMatchesForLeague(this);     // Data coming from database is alreacy sorted.
+            this.Teams = LeagueService.TeamService.GetAllTeamsForLeague(this);          // Data coming from database is already sorted.
+            this.Matches = LeagueService.MatchService.GetAllMatchesForLeague(this);     // Data coming from database is already sorted.
         }
 
-        // Adding/removing/sorting teams and matches.
-
         /// <summary>
-        /// Adds a team to the ObservableCollection of teams.
+        /// Adds a team to the ObservableCollection of teams and sorts the teams.
         /// </summary>
         /// <param name="team">Team object to be added.</param>
         public void AddTeam(Team team) { Teams.Add(team); SortTeams(); }
 
         /// <summary>
-        /// Removes a team from the ObservableCollection of teams.
+        /// Removes a team from the ObservableCollection of teams and sorts the teams.
         /// </summary>
         /// <param name="team">Team object to be removed.</param>
-        public void RemoveTeam(Team team) { Teams.Remove(team); SortTeams(); }
+        public void RemoveTeam(Team team) { Teams.Remove(team); SortTeams(); }      // For version 2.0
 
         /// <summary>
-        /// Adds a match to the ObservableCollection of matches.
+        /// Adds a match to the ObservableCollection of matches and sorts the teams/matches.
         /// </summary>
-        /// <param name="team">Match object to be added.</param>
+        /// <param name="match">Match object to be added.</param>
         public void AddMatch(Match match) { Matches.Add(match); SortMatches(); SortTeams(); }
 
         /// <summary>
-        /// Removes a match from the ObservableCollection of matches.
+        /// Removes a match from the ObservableCollection of matches and sorts the teams/matches.
         /// </summary>
-        /// <param name="team">Match object to be removed.</param>
-        public void RemoveMatch(Match match) { Matches.Remove(match); SortMatches(); SortTeams(); }
+        /// <param name="match">Match object to be removed.</param>
+        public void RemoveMatch(Match match) { Matches.Remove(match); SortMatches(); SortTeams(); }         // For version 2.0
 
         /// <summary>
         /// Sorts the ObservableCollection of teams in the league by points, goal difference, goals for, and name.

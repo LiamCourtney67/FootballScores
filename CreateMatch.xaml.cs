@@ -5,12 +5,10 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace FootballScoresUI
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// View model for the CreateMatch page.
     /// </summary>
     public sealed partial class CreateMatch : Page
     {
@@ -26,27 +24,60 @@ namespace FootballScoresUI
         private ObservableCollection<Player> _yellowCards = new ObservableCollection<Player>();
         private ObservableCollection<Player> _redCards = new ObservableCollection<Player>();
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateMatch"/> class.
+        /// </summary>
         public CreateMatch()
         {
             this.InitializeComponent();
-            CreateMatchLeagueDropdown.ItemsSource = DataStorage.Leagues;
+            try { CreateMatchLeagueDropdown.ItemsSource = DataStorage.Leagues; }
+            catch (Exception) { CreateMatchSubmitMessage.Text = "Failed to get the data from the database."; }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchButton click event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the click event.</param>
         private void CreateMatchButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Match match = _matchService.CreateMatch(_selectedHomeTeam, _selectedAwayTeam, CreateMatchDateInput.Date.Date, int.Parse(CreateMatchHomeGoalsInput.Text),
-                    int.Parse(CreateMatchAwayGoalsInput.Text), _homeScorers, _homeAssists, _awayScorers, _awayAssists, _yellowCards, _redCards);
-                CreateMatchSubmitMessage.Text = $"{match.HomeTeam.Name} {match.HomeGoals} - {match.AwayGoals} {match.AwayTeam.Name} added to {match.League.Name} successfully";
+                if (_selectedHomeTeam != null && _selectedAwayTeam != null)
+                {
+                    if (CreateMatchDateInput.SelectedDate != null)
+                    {
+                        Match match = _matchService.CreateMatch(_selectedHomeTeam, _selectedAwayTeam, CreateMatchDateInput.Date.Date, (int)(CreateMatchHomeGoalsInput.Value),
+                            (int)(CreateMatchAwayGoalsInput.Value), _homeScorers, _homeAssists, _awayScorers, _awayAssists, _yellowCards, _redCards);
+                        CreateMatchSubmitMessage.Text = $"{match.HomeTeam.Name} {match.HomeGoals} - {match.AwayGoals} {match.AwayTeam.Name} added to {match.League.Name} successfully";
+
+                        CreateMatchHomeTeamDropdown.SelectedItem = null;
+                        CreateMatchHomeGoalsInput.Value = 0;
+
+                        CreateMatchAwayTeamDropdown.SelectedItem = null;
+                        CreateMatchAwayGoalsInput.Value = 0;
+
+                        CreateMatchDateInput.SelectedDate = null;
+
+                        _homeScorers.Clear();
+                        _homeAssists.Clear();
+                        _awayScorers.Clear();
+                        _awayAssists.Clear();
+                        _yellowCards.Clear();
+                        _redCards.Clear();
+                    }
+                    else { throw new Exception("Date Played not valid: select a date."); }
+                }
+                else { throw new Exception("Teams not valid: select a home and away team."); }
             }
-            catch (Exception ex)
-            {
-                CreateMatchSubmitMessage.Text = $"{ex.Message}";
-            }
+            catch (Exception ex) { CreateMatchSubmitMessage.Text = $"{ex.Message}"; }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchLeagueDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchLeagueDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -63,39 +94,60 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchHomeTeamDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchHomeTeamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _selectedHomeTeam = CreateMatchHomeTeamDropdown.SelectedItem as Team;
-            if (_selectedHomeTeam.Players.Count != 0)
+            if (_selectedHomeTeam != null)
             {
-                CreateMatchHomeScorerInput.ItemsSource = _selectedHomeTeam.Players;
-                CreateMatchHomeScorerInput.DisplayMemberPath = "Name";
-                CreateMatchHomeAssistInput.ItemsSource = _selectedHomeTeam.Players;
-                CreateMatchHomeAssistInput.DisplayMemberPath = "Name";
-                CreateMatchHomeYellowCardInput.ItemsSource = _selectedHomeTeam.Players;
-                CreateMatchHomeYellowCardInput.DisplayMemberPath = "Name";
-                CreateMatchHomeRedCardInput.ItemsSource = _selectedHomeTeam.Players;
-                CreateMatchHomeRedCardInput.DisplayMemberPath = "Name";
+                if (_selectedHomeTeam.Players.Count != 0)
+                {
+                    CreateMatchHomeScorerInput.ItemsSource = _selectedHomeTeam.Players;
+                    CreateMatchHomeScorerInput.DisplayMemberPath = "Name";
+                    CreateMatchHomeAssistInput.ItemsSource = _selectedHomeTeam.Players;
+                    CreateMatchHomeAssistInput.DisplayMemberPath = "Name";
+                    CreateMatchHomeYellowCardInput.ItemsSource = _selectedHomeTeam.Players;
+                    CreateMatchHomeYellowCardInput.DisplayMemberPath = "Name";
+                    CreateMatchHomeRedCardInput.ItemsSource = _selectedHomeTeam.Players;
+                    CreateMatchHomeRedCardInput.DisplayMemberPath = "Name";
+                }
             }
 
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchAwayTeamDropdown selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchAwayTeamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _selectedAwayTeam = CreateMatchAwayTeamDropdown.SelectedItem as Team;
-            if (_selectedAwayTeam.Players.Count != 0)
+            if (_selectedAwayTeam != null)
             {
-                CreateMatchAwayScorerInput.ItemsSource = _selectedAwayTeam.Players;
-                CreateMatchAwayScorerInput.DisplayMemberPath = "Name";
-                CreateMatchAwayAssistInput.ItemsSource = _selectedAwayTeam.Players;
-                CreateMatchAwayAssistInput.DisplayMemberPath = "Name";
-                CreateMatchAwayYellowCardInput.ItemsSource = _selectedAwayTeam.Players;
-                CreateMatchAwayYellowCardInput.DisplayMemberPath = "Name";
-                CreateMatchAwayRedCardInput.ItemsSource = _selectedAwayTeam.Players;
-                CreateMatchAwayRedCardInput.DisplayMemberPath = "Name";
+                if (_selectedAwayTeam.Players.Count != 0)
+                {
+                    CreateMatchAwayScorerInput.ItemsSource = _selectedAwayTeam.Players;
+                    CreateMatchAwayScorerInput.DisplayMemberPath = "Name";
+                    CreateMatchAwayAssistInput.ItemsSource = _selectedAwayTeam.Players;
+                    CreateMatchAwayAssistInput.DisplayMemberPath = "Name";
+                    CreateMatchAwayYellowCardInput.ItemsSource = _selectedAwayTeam.Players;
+                    CreateMatchAwayYellowCardInput.DisplayMemberPath = "Name";
+                    CreateMatchAwayRedCardInput.ItemsSource = _selectedAwayTeam.Players;
+                    CreateMatchAwayRedCardInput.DisplayMemberPath = "Name";
+                }
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchHomeScorerInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchHomeScorerInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -104,7 +156,7 @@ namespace FootballScoresUI
                 var selectedPlayer = comboBox.SelectedItem as Player;
                 if (selectedPlayer != null)
                 {
-                    if (_homeScorers.Count(player => player.PlayerID == selectedPlayer.PlayerID) < CreateMatchHomeGoalsInput.Value)
+                    if (_homeScorers.Count() < CreateMatchHomeGoalsInput.Value)
                     {
                         _homeScorers.Add(selectedPlayer);
                         CreateMatchSubmitMessage.Text = $"{selectedPlayer.Name} added to {_selectedHomeTeam.Name} scorers.";
@@ -120,6 +172,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchHomeAssistInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchHomeAssistInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -128,7 +185,7 @@ namespace FootballScoresUI
                 var selectedPlayer = comboBox.SelectedItem as Player;
                 if (selectedPlayer != null)
                 {
-                    if (_homeAssists.Count(player => player.PlayerID == selectedPlayer.PlayerID) < CreateMatchHomeGoalsInput.Value)
+                    if (_homeAssists.Count() < CreateMatchHomeGoalsInput.Value)
                     {
                         _homeAssists.Add(selectedPlayer);
                         CreateMatchSubmitMessage.Text = $"{selectedPlayer.Name} added to {_selectedHomeTeam.Name} assists.";
@@ -143,6 +200,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchHomeYellowCardInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchHomeYellowCardInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -166,6 +228,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchHomeRedCardInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchHomeRedCardInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -189,6 +256,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchAwayScorerInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchAwayScorerInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -197,7 +269,7 @@ namespace FootballScoresUI
                 var selectedPlayer = comboBox.SelectedItem as Player;
                 if (selectedPlayer != null)
                 {
-                    if (_awayAssists.Count(player => player.PlayerID == selectedPlayer.PlayerID) < CreateMatchAwayGoalsInput.Value)
+                    if (_awayScorers.Count() < CreateMatchAwayGoalsInput.Value)
                     {
                         _awayScorers.Add(selectedPlayer);
                         CreateMatchSubmitMessage.Text = $"{selectedPlayer.Name} added to {_selectedAwayTeam.Name} scorers.";
@@ -212,6 +284,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchAwayAssistInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchAwayAssistInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -220,7 +297,7 @@ namespace FootballScoresUI
                 var selectedPlayer = comboBox.SelectedItem as Player;
                 if (selectedPlayer != null)
                 {
-                    if (_awayAssists.Count(player => player.PlayerID == selectedPlayer.PlayerID) < CreateMatchAwayGoalsInput.Value)
+                    if (_awayAssists.Count() < CreateMatchAwayGoalsInput.Value)
                     {
                         _awayAssists.Add(selectedPlayer);
                         CreateMatchSubmitMessage.Text = $"{selectedPlayer.Name} added to {_selectedAwayTeam.Name} assists.";
@@ -235,6 +312,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchAwayYellowCardInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchAwayYellowCardInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -258,6 +340,11 @@ namespace FootballScoresUI
             }
         }
 
+        /// <summary>
+        /// Event handler for the CreateMatchAwayRedCardInput selection changed event.
+        /// </summary>
+        /// <param name="sender">The control that triggered the event.</param>
+        /// <param name="e">Event data that provides information about the selection event.</param>
         private void CreateMatchAwayRedCardInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;

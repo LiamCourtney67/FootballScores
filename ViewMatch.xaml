@@ -21,9 +21,12 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
-                <TextBlock x:Name="ViewMatchTitle" Grid.Row="0" Grid.ColumnSpan="9" Text="View Match" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+                <!--Selecting a match-->
+                <TextBlock x:Name="ViewMatchTitle" Grid.Row="0" Grid.ColumnSpan="9" Text="View Match" FontSize="56" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"
+                           TextWrapping="Wrap" Foreground="White"/>
                 
                 <ComboBox x:Name="ViewMatchLeagueDropdown" Grid.Row="1" Grid.ColumnSpan="9" VerticalAlignment="Stretch" PlaceholderText="Select league..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
                           ItemsSource="{Binding}" DisplayMemberPath="Name" SelectionChanged="ViewTeamLeagueDropdown_SelectionChanged"/>
@@ -37,7 +40,10 @@
                 <ComboBox x:Name="ViewMatchDateAndScoreDropdown" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Stretch" PlaceholderText="Select match date..." FontSize="35" Margin="10" HorizontalAlignment="Stretch"
                           ItemsSource="{Binding}" DisplayMemberPath="MatchData" SelectionChanged="ViewMatchDateDropdown_SelectionChanged"/>
 
-                <Grid x:Name="ViewMatchData" Grid.Row="4" Grid.ColumnSpan="2">
+                <!--Error message only visible on errors-->
+                <TextBlock x:Name="ViewMatchErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Row="4" Grid.ColumnSpan="2" FontSize="35" Foreground="White"/>
+                
+                <Grid x:Name="ViewMatchData" Grid.Row="5" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -53,33 +59,33 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!--Home team titles-->
+                    <!--Headers for home team data-->
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="0">
-                        <TextBlock Text="Home Team:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Home Team:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="0">
-                        <TextBlock Text="Goals:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Goals:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="2" Grid.Column="0">
-                        <TextBlock Text="Scorers:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Scorers:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="3" Grid.Column="0">
-                        <TextBlock Text="Assists:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Assists:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="4" Grid.Column="0">
-                        <TextBlock Text="Yellow Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Yellow Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="5" Grid.Column="0">
-                        <TextBlock Text="Red Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Red Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
 
                     <!--Home team data-->
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="0" Grid.Column="1">
-                        <TextBlock x:Name="ViewMatchHomeTeamName" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewMatchHomeTeamName" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="1">
-                        <TextBlock x:Name="ViewMatchHomeTeamGoals" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewMatchHomeTeamGoals" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
 
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="2" Grid.Column="1">
@@ -87,7 +93,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchHomeTeamScorers" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White" TextAlignment="Center"/>
+                                        <TextBlock x:Name="ViewMatchHomeTeamScorers" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White" TextAlignment="Center"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -99,7 +106,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchHomeTeamAssists" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                                        <TextBlock x:Name="ViewMatchHomeTeamAssists" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -111,7 +119,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchHomeTeamYellowCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                                        <TextBlock x:Name="ViewMatchHomeTeamYellowCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -123,40 +132,41 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchHomeTeamRedCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                                        <TextBlock x:Name="ViewMatchHomeTeamRedCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Border>
 
-                    <!--Away team titles-->
+                    <!--Headers for away team data-->
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="0" Grid.Column="2">
-                        <TextBlock Text="Away Team:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Away Team:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="2">
-                        <TextBlock Text="Goals:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Goals:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="2" Grid.Column="2">
-                        <TextBlock Text="Scorers:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Scorers:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="3" Grid.Column="2">
-                        <TextBlock Text="Assists:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Assists:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="4" Grid.Column="2">
-                        <TextBlock Text="Yellow Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Yellow Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     <Border BorderBrush="LightGray" Background="Gray" BorderThickness="1"  Grid.Row="5" Grid.Column="2">
-                        <TextBlock Text="Red Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock Text="Red Cards:" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
 
                     <!--Away team data-->
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="0" Grid.Column="3">
-                        <TextBlock x:Name="ViewMatchAwayTeamName" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewMatchAwayTeamName" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
                     
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="1" Grid.Column="3">
-                        <TextBlock x:Name="ViewMatchAwayTeamGoals" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                        <TextBlock x:Name="ViewMatchAwayTeamGoals" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                     </Border>
 
                     <Border BorderBrush="LightGray" Background="DarkGray" BorderThickness="1"  Grid.Row="2" Grid.Column="3">
@@ -164,7 +174,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchAwayTeamScorers" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White" TextAlignment="Center"/>
+                                        <TextBlock x:Name="ViewMatchAwayTeamScorers" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White" TextAlignment="Center"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -176,7 +187,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchAwayTeamAssists" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                                        <TextBlock x:Name="ViewMatchAwayTeamAssists" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -188,7 +200,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchAwayTeamYellowCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                                        <TextBlock x:Name="ViewMatchAwayTeamYellowCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -200,7 +213,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock x:Name="ViewMatchAwayTeamRedCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" Foreground="White"/>
+                                        <TextBlock x:Name="ViewMatchAwayTeamRedCards" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                   TextWrapping="Wrap" FontSize="35" Foreground="White"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
