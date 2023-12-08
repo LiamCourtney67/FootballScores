@@ -140,8 +140,7 @@ namespace FootballScoresUI.models
 
                             transaction.Commit();
 
-                            // Return true if the match has been added to the database or throw an exception if it couldn't be added
-                            return match.MatchID > 0;// ? true : throw new Exception("Failed to add the match to the database.");
+                            return match.MatchID > 0;
                         }
                     }
                 }
