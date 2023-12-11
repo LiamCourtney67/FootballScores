@@ -18,8 +18,6 @@ namespace FootballScoresUI
         public MainPage()
         {
             this.InitializeComponent();
-            DatabaseConnection.OpenConnection();
-            DatabaseConnection.CloseConnection();
         }
 
         /// <summary>
